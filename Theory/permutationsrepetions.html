@@ -1,0 +1,103 @@
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Перестановки с повторениями</title>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython_stdlib.js">
+    </script>
+    <link rel="stylesheet" href="styleFont.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body onload="brython();">
+    <div class="col-margin">
+        <h1>Нахождение числа перестановок с повторениями</h1>
+            <div>
+                <p>
+                Перестановки с повторениями — те же перестановки, 
+                однако некоторые элементы могут встречаться несколько раз.
+                </p>
+                <p>Введите число типов объектов k > 0
+                    и затем количество объектов каждого типа n<sub>1</sub>,..., n<sub>k</sub>:</p>
+                <p>k:</p>
+                <input id="valueK" type="number" name="k" value="0" size="10">
+                <br><br>
+                <div id="fields">
+                </div>
+                <p id="placements" class="latex">
+                   <i><i class="macr">P</i><sub>n</sub></span> = ?</i>
+                </p>
+                <br>
+                <button onclick="permutation()">Найти число перестановок с повторениями</button>
+            </div><br><br><br>
+            <a href="index.html">Вернуться на главную</a>
+</body>
+
+<script type="text/javascript">
+const groupField = document.getElementById('valueK')
+const fields = document.getElementById('fields')
+groupField.addEventListener('change', function() {
+    let x = Number.parseFloat(groupField.value)
+    if (x % 1 === 0 && x > 0) {
+        fields.innerHTML = ''
+        for (let i = 0; i < x; i++) {
+            let str = 
+            `<div class="field">
+                <div class="input-field">
+                    <label><i>n<sub>${i+1}</sub> :</i></label>
+                    <input type="number" class="permutation-field">
+                </div>
+            </div>`
+            fields.innerHTML += str
+        }
+        fields.style.display = 'flex'
+        fields.style.flexWrap = 'wrap'
+    }
+    else {
+        document.getElementById("placements").innerHTML = "Введите натуральное число"
+    }
+})
+</script>
+<script type="text/javascript">
+    function permutation() {
+        try {
+            permutations = document.getElementsByClassName("permutation-field")
+            let sum = 0
+            console.log(permutations[0].value);
+            for (let i = 0; i < permutations.length; i++) {
+                let val = parseFloat(permutations[i].value)
+                if (val % 1 !== 0 || val <= 0){
+                    document.getElementById("placements").innerHTML = "Введите натуральные числа"
+                    return 0;
+                }
+                sum += parseInt(permutations[i].value)
+            }
+            let res = fact(sum)
+            let str = "("
+            for (let i = 0; i < permutations.length; i++) {
+                res = res/fact(parseInt(permutations[i].value))
+                if (i != permutations.length - 1){
+                    str += permutations[i].value + ", "
+                }
+                else {
+                    str += permutations[i].value + ")"
+                }
+                
+            }
+            document.getElementById("placements").innerHTML = `<i><i class="macr">P</i><sub>${sum}</sub>${str}</span> = ${res}</i>`
+        }
+        catch {
+            document.getElementById("placements").innerHTML = "Введите натуральные числа"
+        }
+    }
+    
+    function fact(x) {
+        let res = 1
+        for(let i = 1; i <= x; i++) {
+            res *= i
+        }
+        return res
+    }
+    </script>

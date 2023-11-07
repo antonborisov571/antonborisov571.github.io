@@ -1,0 +1,62 @@
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Сочетания</title>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython_stdlib.js">
+    </script>
+    <link rel="stylesheet" href="styleFont.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body onload="brython();">
+    <div class="col-margin">
+        <h1>Нахождение числа сочетаний из n по k</h1>
+            <div>
+                <p>
+                В комбинаторике числом сочетаний из n по k называется набор k элементов, 
+                выбранных из данных n элементов. Наборы, отличающиеся только порядком 
+                следования элементов (но не составом), считаются одинаковыми.
+                </p>
+                <p>Введите числа n и k (Условие: n &ge; k &ge; 0):</p>
+                <p>k:</p>
+                <input id="valueK" type="number" name="k" value="0" size="10">
+                <p>n:</p>
+                <input id="valueN" type="number" name="n" value="0" size="10">  
+                <br>
+                <p id="placements" class="latex">
+                   <i> C<span class="supsub"><sup>k</sup><sub>n</sub></span> = ?</i>
+                </p>
+                <br>
+                <button id="calc">Найти число сочетаний</button>
+            </div><br><br><br>
+            <a href="index.html">Вернуться на главную</a>
+</body>
+
+<script type="text/python">
+    from browser import document
+    from math import factorial
+    from decimal import *
+    import sys
+    sys.set_int_max_str_digits(0)
+
+    def click(ev):
+        try:
+            valueK = int(document.getElementById("valueK").value)
+            valueN = int(document.getElementById("valueN").value)
+            if valueK > valueN:
+                document.getElementById("placements").innerHTML = "k должно быть не больше n, быстро ввёл по-нормальному"
+            elif valueK < 0 or valueN < 0:
+                document.getElementById("placements").innerHTML = "Введите целые неотрицательные числа"
+            else:
+                factN = Decimal(factorial(valueN))
+                factNK = Decimal(factorial(valueN-valueK))
+                factK = Decimal(factorial(valueK))
+                document.getElementById("placements").innerHTML = "<i>C<span class=\"supsub\"><sup>" + str(valueK) + "</sup><sub>" + str(valueN) +"</sub></span> = " + str(factN/factNK/factK)+"</i>"
+        except ValueError:
+            document.getElementById("placements").innerHTML = "Введите целые неотрицательные числа"
+    
+    document["calc"].bind("click", click)
+</script>

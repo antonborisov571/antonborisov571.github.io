@@ -1,0 +1,50 @@
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Перестановки</title>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython_stdlib.js">
+    </script>
+    <link rel="stylesheet" href="styleFont.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body onload="brython();">
+    <div class="col-margin">
+        <h1>Нахождение числа перестановок из n элементов</h1>
+            <div>
+                <p>
+                Число перестановок - число различных способов, которыми может быть упорядочено данное множество,
+                состоящее из n элементов.
+                </p>
+                <p>Введите число n (Условие: n &ge; 0):</p>
+                <input id="value" type="number" name="n" value="0" size="10"> 
+                <br>
+                <p id="permutations" class="latex">
+                    <i>P<sub>n</sub> = ?</i>
+                </p>
+                <br>
+                <button id="calc">Найти число перестановок</button>
+            </div><br><br><br>
+            <a href="index.html">Вернуться на главную</a>
+</body>
+
+<script type="text/python">
+    from browser import document
+    from math import factorial
+    from decimal import *
+    import sys
+    sys.set_int_max_str_digits(0)
+
+    def click(ev):
+        try:
+            value = int(document.getElementById("value").value)
+            fact = Decimal(factorial(value))
+            document.getElementById("permutations").innerHTML = "<i>"+"P" +"<sub>" + str(value) +"</sub>" + " = " + str(fact)+"<i/>"
+        except ValueError:
+            document.getElementById("permutations").innerHTML = "Введите целое неотрицательное число"
+    
+    document["calc"].bind("click", click)
+</script>

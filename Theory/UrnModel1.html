@@ -1,0 +1,67 @@
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Урновая модель</title>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.11/brython_stdlib.js">
+    </script>
+    <link rel="stylesheet" href="styleFont.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body onload="brython();">
+    <div class="col-margin">
+        <h1>Урновая модель 1 тип (все извлечённые нужные)</h1>
+            <div>
+                <p>Введите количество элементов n, 
+                    сколько элементов выбирается k, 
+                    сколько всего нужных элементов m:</p>
+                <p>n:</p>
+                <input id="valueN" type="number" name="n" value="0" size="10">
+                <p>k:</p>
+                <input id="valueK" type="number" name="k" value="0" size="10"> 
+                <p>m:</p>
+                <input id="valueM" type="number" name="m" value="0" size="10"> 
+                <br>
+                <p id="placements" class="latex">
+                   Ответ:
+                </p>
+                <br>
+                <button id="calc">Найти вероятность</button>
+            </div><br><br><br>
+            <a href="index.html">Вернуться на главную</a>
+</body>
+
+<script type="text/python">
+    from browser import document
+    from math import factorial
+    from decimal import *
+    from fractions import Fraction
+    import sys
+    sys.set_int_max_str_digits(0)
+
+    def click(ev):
+        try:
+            valueN = int(document.getElementById("valueN").value)
+            valueK = int(document.getElementById("valueK").value)
+            valueM = int(document.getElementById("valueM").value)
+            if valueK > valueM:
+                document.getElementById("placements").innerHTML = "k должно быть не больше m, быстро ввёл по-нормальному"
+            elif valueM > valueN:
+                document.getElementById("placements").innerHTML = "m должно быть не больше n, быстро ввёл по-нормальному"
+            else:
+                factM = Decimal(factorial(valueM))
+                factMK = Decimal(factorial(valueM-valueK))
+                factN = Decimal(factorial(valueN))
+                factNK = Decimal(factorial(valueN-valueK))
+                factK = Decimal(factorial(valueK))
+                combNumerator = Decimal(factM/factMK/factK)
+                combDenominator = Decimal(factN/factNK/factK)
+                document.getElementById("placements").innerHTML = "Ответ: " + str(Fraction(combNumerator/combDenominator).limit_denominator()) + " = " + str(combNumerator/combDenominator)
+        except ValueError:
+            document.getElementById("placements").innerHTML = "Введите целые неотрицательные числа"
+    
+    document["calc"].bind("click", click)
+</script>

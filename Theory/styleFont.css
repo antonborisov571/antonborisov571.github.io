@@ -1,0 +1,50 @@
+html {
+    font: 600 18px/24px GraphikLC;
+}
+
+.latex {
+    display: inline-flex;
+}
+
+@font-face {
+    font-family: GraphikLC; 
+    src: url(GraphikLC.ttf); 
+}
+
+a:hover {
+    color: #00b2fa;
+}
+
+a {
+    font: 400 18px/24px GraphikLC;
+    letter-spacing: 0;
+    color: #050307;
+}
+
+a:active, a:hover {
+    outline: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.supsub {
+    display: inline-block;
+}
+
+.supsub sup,
+.supsub sub {
+    position: relative;
+    display: block;
+    font-size: .7em;
+    line-height: 1.2;
+}
+
+.supsub sub {
+    top: .3em;
+}
+
+.macr {
+    text-decoration: overline
+}
