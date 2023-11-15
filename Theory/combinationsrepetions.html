@@ -47,9 +47,7 @@
         try:
             valueK = int(document.getElementById("valueK").value)
             valueN = int(document.getElementById("valueN").value)
-            if valueK > valueN:
-                document.getElementById("placements").innerHTML = "k должно быть не больше n, быстро ввёл по-нормальному"
-            elif valueN <= 0 or valueK <= 0:
+            if valueN <= 0 or valueK <= 0:
                 document.getElementById("placements").innerHTML = "Введите натуральные числа"
             else:
                 factK = Decimal(factorial(valueK))
